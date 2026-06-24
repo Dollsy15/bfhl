@@ -62,15 +62,12 @@ public class BfhlController {
 
     /**
      * GET /health
-     * Health check endpoint.
+     * Health check endpoint - returns plain text status.
      *
-     * @return 200 OK with server status
+     * @return 200 OK with plain text "API is healthy and running."
      */
     @GetMapping("/health")
-    public ResponseEntity<Map<String, String>> healthCheck() {
-        Map<String, String> response = new HashMap<>();
-        response.put("status", "UP");
-        response.put("service", "bfhl-api");
-        return ResponseEntity.ok(response);
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("API is healthy and running.");
     }
 }
