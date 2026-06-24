@@ -14,10 +14,10 @@ import java.util.Map;
  * REST Controller exposing the /bfhl endpoint.
  *
  * POST /bfhl  – Main processing endpoint
- * GET  /bfhl  – Returns operation code (optional health-check style endpoint)
+ * GET  /bfhl  – Returns operation code
+ * GET  /health – Returns server health status
  */
 @RestController
-@RequestMapping("/bfhl")
 @CrossOrigin(origins = "*")
 public class BfhlController {
 
@@ -34,7 +34,7 @@ public class BfhlController {
      * @param requestDto JSON body containing "data" array
      * @return 200 OK with BfhlResponseDto on success, 500 on error
      */
-    @PostMapping
+    @PostMapping("/bfhl")
     public ResponseEntity<?> processData(@RequestBody BfhlRequestDto requestDto) {
         try {
             BfhlResponseDto response = bfhlService.processData(requestDto);
@@ -53,10 +53,24 @@ public class BfhlController {
      *
      * @return 200 OK with {"operation_code": 1}
      */
-    @GetMapping
+    @GetMapping("/bfhl")
     public ResponseEntity<Map<String, Integer>> getOperationCode() {
         Map<String, Integer> response = new HashMap<>();
         response.put("operation_code", 1);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * GET /health
+     * Health check endpoint.
+     *
+     * @return 200 OK with server status
+     */
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, String>> healthCheck() {
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "UP");
+        response.put("service", "bfhl-api");
         return ResponseEntity.ok(response);
     }
 }
