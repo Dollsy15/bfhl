@@ -49,15 +49,13 @@ public class BfhlController {
 
     /**
      * GET /bfhl
-     * Returns a simple operation code — used to verify the endpoint is live.
+     * Returns a plain text message indicating the API is running.
      *
-     * @return 200 OK with {"operation_code": 1}
+     * @return 200 OK with plain text message
      */
     @GetMapping("/bfhl")
-    public ResponseEntity<Map<String, Integer>> getOperationCode() {
-        Map<String, Integer> response = new HashMap<>();
-        response.put("operation_code", 1);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<String> getOperationCode() {
+        return ResponseEntity.ok("BFHL API is running. Send a POST request to this endpoint with a valid JSON body.");
     }
 
     /**
